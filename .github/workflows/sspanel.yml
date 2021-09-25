@@ -25,8 +25,13 @@ jobs:
 
       - name: "开始执行"
         run: |
-          # node sspanel_checkin.js
-          node https://raw.githubusercontent.com/sudojia/sspanel_checkin/master/sspanel_checkin.js
+          node sspanel_checkin.js
         env:
           ACCOUNTS: ${{ secrets.ACCOUNTS }}
           SITE_URL: ${{ secrets.SITE_URL }}
+
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 1
+          keep_minimum_runs: 1
