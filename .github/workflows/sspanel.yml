@@ -25,8 +25,8 @@ jobs:
 
       - name: "开始执行"
         run: |
-          node sspanel_checkin.js
+          # node sspanel_checkin.js
+          node https://raw.githubusercontent.com/sudojia/sspanel_checkin/master/sspanel_checkin.js
         env:
-          SSPANEL_API: ${{ secrets.SSPANEL_API }}
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWD: ${{ secrets.PASSWD }}
+          ACCOUNTS: ${{ secrets.ACCOUNTS }}
+          SITE_URL: ${{ secrets.SITE_URL }}
