@@ -1,27 +1,38 @@
 /**
  * SSPANEL面板签到
  */
-const $ = new Env('SSPANEL面板签到');
+const $ = new Env('SSPANEL面板自动签到');
 // const notify = $.isNode() ? require('./sendNotify') : '';
-// SSPANEL_API: 面板网站、EMAIL: 邮箱、PWD: 密码
-let SSPANEL_API = $.isNode() ? (process.env.SSPANEL_API ? process.env.SSPANEL_API : '') : ($.getdata('SSPANEL_API') ? $.getdata('SSPANEL_API') : ''),
-    email = $.isNode() ? (process.env.EMAIL ? process.env.EMAIL : '') : ($.getdata('EMAIL') ? $.getdata('EMAIL') : ''),
-    pwd = $.isNode() ? (process.env.PASSWD ? process.env.PASSWD : '') : ($.getdata('PASSWD') ? $.getdata('PASSWD') : '');
+let accounts = $.isNode() ? (process.env.ACCOUNTS ? process.env.ACCOUNTS : '') : ($.getdata('ACCOUNTS') ? $.getdata('ACCOUNTS') : ''),
+    apis = $.isNode() ? (process.env.SITE_URL ? process.env.SITE_URL : '') : ($.getdata('SITE_URL') ? $.getdata('SITE_URL') : ''),
+    accountList = [],
+    apiList = [];
+if (accounts.indexOf('&') > -1) {
+    accountList = accounts.split('&');
+} else {
+    accountList = [accounts];
+}
+if (apis.indexOf('&') > -1) {
+    apiList = apis.split('&');
+} else {
+    apiList = [apis];
+}
 
 !(async () => {
-    if (!email) {
-        console.log('请设置环境变量, EMAIL')
+    if (!accounts) {
+        console.log('请设置环境变量')
         return;
     }
-    if (!SSPANEL_API) {
-        console.log('请设置环境变量, SSPANEL_API')
-        return;
-    }
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < accountList.length; i++) {
         $.index = i + 1;
-        console.log(`\n*****账号【${$.index}】${email}****\n`);
+        $.email = accountList[i].trim().split(',')[0];
+        $.pwd = accountList[i].trim().split(',')[1];
+        for (let j = 0; j < apiList.length; j++) {
+            $.SSPANEL_API = apiList[i].trim().split('&')[0];
+        }
+        console.log(`\n*****开始第【${$.index}】个✈场网站****\n`);
         await main();
-        await $.wait(1000)
+        await $.wait(2000)
     }
 })().catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -66,8 +77,9 @@ function checkin() {
  * @returns {*}
  */
 function login() {
+    $.log('API: ', $.SSPANEL_API)
     return new Promise((resolve) => {
-        $.post(sendPost('auth/login', `email=${email}&passwd=${pwd}&code=`), (err, response, data) => {
+        $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), (err, response, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}\n登录 API 请求失败，请检查网路重试`)
@@ -86,14 +98,14 @@ function login() {
 
 function sendPost(path, body = {}) {
     return {
-        url: `${SSPANEL_API}/${path}`,
+        url: `${$.SSPANEL_API}/${path}`,
         body: body,
         headers: {
             "Accept": " application/json, text/javascript, */*; q=0.01",
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
             "X-requested-with": "XMLHttpRequest",
-            "Origin": SSPANEL_API,
-            "Referer": SSPANEL_API,
+            "Origin": `${$.SSPANEL_API}`,
+            "Referer": `${$.SSPANEL_API}`,
             "Accept-encoding": "gzip, deflate, br",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
         }
