@@ -1,5 +1,7 @@
 /**
  * SSPANEL面板签到
+ * @author Telegram@sudojia
+ * @site https://blog.imzjw.cn
  */
 const $ = new Env('SSPANEL面板自动签到');
 // const notify = $.isNode() ? require('./sendNotify') : '';
@@ -77,7 +79,6 @@ function checkin() {
  * @returns {*}
  */
 function login() {
-    $.log('API: ', $.SSPANEL_API)
     return new Promise((resolve) => {
         $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), (err, response, data) => {
             try {
