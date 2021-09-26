@@ -31,6 +31,15 @@ jobs:
           SITE_URL: ${{ secrets.SITE_URL }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          QYWX_KEY: ${{ secrets.QYWX_KEY }}
+          IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
+          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
 
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
