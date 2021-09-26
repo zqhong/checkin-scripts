@@ -5,10 +5,12 @@
  * @site https://blog.imzjw.cn
  */
 const $ = new Env('SSPANEL面板自动签到');
+const notify = $.isNode() ? require('./sendNotify') : '';
 let accounts = $.isNode() ? (process.env.ACCOUNTS ? process.env.ACCOUNTS : '') : ($.getdata('ACCOUNTS') ? $.getdata('ACCOUNTS') : ''),
     apis = $.isNode() ? (process.env.SITE_URL ? process.env.SITE_URL : '') : ($.getdata('SITE_URL') ? $.getdata('SITE_URL') : ''),
     accountList = [],
     apiList = [];
+let message = '';
 if (accounts.indexOf('&') > -1) {
     accountList = accounts.split('&');
 } else {
@@ -34,6 +36,7 @@ if (apis.indexOf('&') > -1) {
         await main();
         await $.wait(2000)
     }
+    await sendMsg();
 })().catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
@@ -44,6 +47,17 @@ async function main() {
     await login();
     await $.wait(2000)
     await checkin();
+}
+
+function sendMsg() {
+    return new Promise(async resolve => {
+        if (message) {
+            await notify.sendNotify(`${$.name}`, `${message}`);
+            resolve();
+            return;
+        }
+        resolve()
+    })
 }
 
 /**
@@ -60,17 +74,18 @@ function checkin() {
                     console.log(`${JSON.stringify(err)}\n签到 API 请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
+                    message += `第【${$.index}】个\n`;
                     if (data.ret === 1) {
-                        // message += `第【${$.index}】个签到网站\n`;
                         if (data.trafficInfo) {
-                            console.log(`今日签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}`)
-                            // message += `今日签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}`
+                            console.log(`签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}\n`)
+                            message += `签到${data.msg}\n\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}\n`
                         } else {
-                            console.log(`今日签到${data.msg}\n`)
-                            // message += `今日签到${data.msg}\n`;
+                            console.log(`签到${data.msg}\n`)
+                            message += `签到${data.msg}\n\n`;
                         }
                     } else {
                         console.log(data.msg, '\n');
+                        message += data.msg + '\n\n';
                     }
                 }
             } catch (e) {
