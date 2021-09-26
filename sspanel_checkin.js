@@ -5,7 +5,7 @@
  * @site https://blog.imzjw.cn
  */
 const $ = new Env('SSPANEL面板自动签到');
-const notify = $.isNode() ? require('./sendNotify') : '';
+const notify = $.isNode() ? require('sendNotify') : '';
 let accounts = process.env.ACCOUNTS,
     site_urls = process.env.SITE_URL,
     accountList = [],
