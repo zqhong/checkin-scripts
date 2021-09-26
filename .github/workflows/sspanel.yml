@@ -29,6 +29,11 @@ jobs:
         env:
           ACCOUNTS: ${{ secrets.ACCOUNTS }}
           SITE_URL: ${{ secrets.SITE_URL }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
 
       - name: Delete Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
