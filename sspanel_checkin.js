@@ -6,7 +6,7 @@
  */
 const e = require('./env');
 const $ = new e.Env('SSPANEL面板自动签到');
-const notify = $.isNode() ? require('../sendNotify') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 let accounts = $.isNode() ? (process.env.ACCOUNTS ? process.env.ACCOUNTS : '') : ($.getdata('ACCOUNTS') ? $.getdata('ACCOUNTS') : ''),
     apis = $.isNode() ? (process.env.SITE_URL ? process.env.SITE_URL : '') : ($.getdata('SITE_URL') ? $.getdata('SITE_URL') : ''),
     accountList = [],
