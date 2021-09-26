@@ -147,7 +147,7 @@ if (process.env.PUSH_PLUS_USER) {
  * @returns {Promise<unknown>}
  *
  */
-async function sendNotify(text, desp, params = {}, author = '\n\n仅供用于学习') {
+async function sendNotify(text, desp, params = {}, author = '\n本项目免费使用：https://github.com/sudojia/sspanel_checkin') {
   //提供6种通知
   desp += author;//增加作者信息，防止被贩卖等
   await Promise.all([
