@@ -5,11 +5,11 @@
  * @site https://blog.imzjw.cn
  */
 const $ = new Env('SSPANEL面板自动签到');
-const notify = $.isNode() ? require('./sendNotify') : '';
-let accounts = process.env.ACCOUNTS,
-    apis = process.env.SITE_URL,
+// const notify = $.isNode() ? require('./sendNotify') : '';
+let accounts = $.isNode() ? (process.env.ACCOUNTS ? process.env.ACCOUNTS : '') : ($.getdata('ACCOUNTS') ? $.getdata('ACCOUNTS') : ''),
+    apis = $.isNode() ? (process.env.SITE_URL ? process.env.SITE_URL : '') : ($.getdata('SITE_URL') ? $.getdata('SITE_URL') : ''),
     accountList = [],
-    apiList = [], message = '';
+    apiList = [];
 if (accounts.indexOf('&') > -1) {
     accountList = accounts.split('&');
 } else {
@@ -33,11 +33,10 @@ if (apis.indexOf('&') > -1) {
         for (let j = 0; j < apiList.length; j++) {
             $.SSPANEL_API = apiList[j].trim().split('&')[0];
         }
-        console.log(`\n*****开始第【${$.index}】个签到网站****\n`);
+        console.log(`\n*****开始第【${$.index}】个网站****\n`);
         await main();
         await $.wait(2000)
     }
-    await sendMsg();
 })().catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
@@ -45,17 +44,9 @@ if (apis.indexOf('&') > -1) {
 })
 
 async function main() {
-    // 登录
     await login();
     await $.wait(2000)
-    // 签到
     await checkin();
-}
-
-async function sendMsg() {
-    if (message) {
-        await notify.sendNotify(`${$.name}`, message);
-    }
 }
 
 /**
@@ -69,17 +60,17 @@ function checkin() {
         $.post(sendPost('user/checkin', ''), (err, response, data) => {
             try {
                 if (err) {
-                    console.log(`签到 API 请求失败，原因：${JSON.stringify(err)}\n`)
+                    console.log(`${JSON.stringify(err)}\n签到 API 请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
                     if (data.ret === 1) {
-                        message += `第【${$.index}】个签到网站\n`;
+                        // message += `第【${$.index}】个签到网站\n`;
                         if (data.trafficInfo) {
                             console.log(`今日签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}`)
-                            message += `今日签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}`
+                            // message += `今日签到${data.msg}\n【今日已用】${data.trafficInfo.todayUsedTraffic}\n【过去已用】${data.trafficInfo.lastUsedTraffic}\n【剩余流量】${data.trafficInfo.unUsedTraffic}`
                         } else {
                             console.log(`今日签到${data.msg}\n`)
-                            message += `今日签到${data.msg}\n`;
+                            // message += `今日签到${data.msg}\n`;
                         }
                     } else {
                         console.log(data.msg, '\n');
@@ -104,7 +95,7 @@ function login() {
         $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), (err, response, data) => {
             try {
                 if (err) {
-                    console.log(`登录 API 请求失败，原因：${JSON.stringify(err)}\n`)
+                    console.log(`${JSON.stringify(err)}\n登录 API 请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
                     console.log(data.msg, '\n');
