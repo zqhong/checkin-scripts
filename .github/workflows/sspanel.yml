@@ -1,4 +1,4 @@
-name: SSPANEL 面板签到
+name: checkin
 
 on:
   workflow_dispatch:
