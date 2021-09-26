@@ -1,13 +1,13 @@
 /**
  * SSPANEL面板签到
- * 
+ *
  * @author Telegram@sudojia
  * @site https://blog.imzjw.cn
  */
 const $ = new Env('SSPANEL面板自动签到');
-const notify = $.isNode() ? require('sendNotify') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 let accounts = process.env.ACCOUNTS,
-    site_urls = process.env.SITE_URL,
+    apis = process.env.SITE_URL,
     accountList = [],
     apiList = [], message = '';
 if (accounts.indexOf('&') > -1) {
@@ -15,10 +15,10 @@ if (accounts.indexOf('&') > -1) {
 } else {
     accountList = [accounts];
 }
-if (site_urls.indexOf('&') > -1) {
-    apiList = site_urls.split('&');
+if (apis.indexOf('&') > -1) {
+    apiList = apis.split('&');
 } else {
-    apiList = [site_urls];
+    apiList = [apis];
 }
 
 !(async () => {
