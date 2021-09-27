@@ -65,13 +65,13 @@ function sendMsg() {
  * @returns {*}
  */
 function checkin() {
-    console.log('开始进行签到...\n');
     return new Promise((resolve) => {
         $.post(sendPost('user/checkin', ''), (err, response, data) => {
             try {
                 if (err) {
-                    $.log(`${JSON.stringify(err)}\n签到 API 请求失败，请检查网路重试`)
+                    console.log(`签到 API 请求失败，请把下方报错日志发给 Telegram@sudojia\n${JSON.stringify(err)}`)
                 } else {
+                    console.log('开始进行签到...\n');
                     data = JSON.parse(data);
                     message += `开始第【${$.index}】个网站\n`;
                     if (data.ret === 1) {
@@ -106,7 +106,7 @@ function login() {
         $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), (err, response, data) => {
             try {
                 if (err) {
-                    console.log(`登录 API 请求失败，请检查网路重试\n${JSON.stringify(err)}`)
+                    console.log(`登录 API 请求失败，请把下方报错日志发给 Telegram@sudojia\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
                     console.log(data.msg, '\n');

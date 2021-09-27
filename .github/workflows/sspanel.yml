@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: "12.x"
 
-      - name: 缓存依赖
+      - name: 缓存依赖包
         uses: actions/cache@v2.1.1
         id: cache-dependencies
         with:
