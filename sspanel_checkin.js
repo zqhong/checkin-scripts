@@ -42,10 +42,10 @@ if (total.indexOf('&') > -1) {
     $.done();
 })
 
-function main() {
-    login();
-    $.wait(2000)
-    checkin();
+async function main() {
+    await login();
+    await $.wait(2000)
+    await checkin();
 }
 
 function sendMsg() {
