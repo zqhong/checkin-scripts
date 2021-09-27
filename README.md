@@ -64,19 +64,19 @@
 
 3. 点击仓库中的 Actions，点击图中所示
 
-   ![img](https://bu.dusays.com/2021/09/27/8147fc292e995.png)
+   ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171440.jpg)
 
    看图
 
-   ![1632732745365.png](https://bu.dusays.com/2021/09/27/a3d7dc4686cb1.png)
+   ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171527.jpg)
 
    继续看图
 
-   ![1632732800162.png](https://bu.dusays.com/2021/09/27/11f9f4b5e0c0a.png)
+   ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171547.jpg)
 
    执行成功，如图，如果报错，不妨可以提个 [issues](https://github.com/sudojia/sspanel_checkin/issues/new)，不要害羞！
 
-   ![1632732842217.png](https://bu.dusays.com/2021/09/27/99606db217de4.png)
+   ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171605.jpg)
 
 ## ⚠️注意事项
 
