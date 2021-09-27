@@ -19,6 +19,13 @@ jobs:
         with:
           node-version: "12.x"
 
+      - name: 缓存依赖
+        uses: actions/cache@v2.1.1
+        id: cache-dependencies
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}   
+
       - name: 安装依赖包
         run: |
           npm install
@@ -27,8 +34,7 @@ jobs:
         run: |
           node sspanel_checkin.js
         env:
-          ACCOUNTS: ${{ secrets.ACCOUNTS }}
-          SITE_URL: ${{ secrets.SITE_URL }}
+          SITE_ACCOUNTS: ${{ secrets.SITE_ACCOUNTS }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
