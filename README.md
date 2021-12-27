@@ -6,7 +6,7 @@
     每天定时自动签到获得流量
     <br />
     <br />
-    <a href="https://github.com/sudojia/sspanel_checkin/issues/new">上报Bug</a>
+    <a href="https://github.com/sudojia/sspanel_checkin/issues/new">上报Bug、意见反馈</a>
   </p>
 
 - [💍介绍](#介绍)
