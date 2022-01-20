@@ -24,9 +24,14 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
             $.index = i + 1;
+            $.isLogin = true;
+            await checkCookie();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
+            if (!$.isLogin) {
+                await notify.sendNotify(`「掘金签到报告」`, `掘金账号${$.index} Cookie已失效，请重新登录获取Cookie`);
+            }
             await main();
-            await $.wait(2000)
+            await $.wait(2000);
         }
     }
     if (message) {
@@ -47,10 +52,10 @@ async function main() {
 }
 
 /**
- * 检测签到 / 403 状态
+ * 检测签到状态
  */
-async function checkStatus() {
-    return new Promise(async (resolve) => {
+function checkStatus() {
+    return new Promise((resolve) => {
         $.get(sendGet('growth_api/v1/get_today_status', ''), async (err, response, data) => {
             try {
                 if (err) {
@@ -67,6 +72,7 @@ async function checkStatus() {
                             await checkIn()
                         }
                     } else {
+                        $.isLogin = false;
                         console.log('Cookie 可能失效了，请重新获取!!!');
                     }
                 }
@@ -214,6 +220,31 @@ function getUserName() {
                     data = JSON.parse(data);
                     if (0 === data.err_no) {
                         $.userName = data.data.user_name;
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+/**
+ * 检测 Cookie 是否失效、没法子了，只能另写个方法了！
+ */
+function checkCookie() {
+    return new Promise((resolve) => {
+        $.get(sendGet('growth_api/v1/get_today_status', ''), (err, response, data) => {
+            try {
+                if (err) {
+                    console.log(`checkCookie API 请求失败\n${JSON.stringify(err)}`)
+                } else {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (403 === data.err_no) {
+                        $.isLogin = false;
                     }
                 }
             } catch (e) {
