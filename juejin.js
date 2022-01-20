@@ -71,9 +71,6 @@ function checkStatus() {
                             // 调用签到函数
                             await checkIn()
                         }
-                    } else {
-                        $.isLogin = false;
-                        console.log('Cookie 可能失效了，请重新获取!!!');
                     }
                 }
             } catch (e) {
