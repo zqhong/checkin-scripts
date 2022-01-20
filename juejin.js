@@ -123,30 +123,6 @@ function checkIn() {
 }
 
 /**
- * 统计签到天数, 没什么用~
- */
-function getCount() {
-    return new Promise((resolve) => {
-        $.get(sendGet('growth_api/v1/get_counts', ``), (err, response, data) => {
-            try {
-                if (err) {
-                    console.log(`getCount API 请求失败\n${JSON.stringify(err)}`)
-                } else {
-                    data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        message += `\n【签到统计】连签${data.data.cont_count}天、累签${data.data.sum_count}天`
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, response);
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
-/**
  * 查询免费抽奖次数
  */
 function queryFreeLuckyDrawCount() {
@@ -217,6 +193,30 @@ function getUserName() {
                     data = JSON.parse(data);
                     if (0 === data.err_no) {
                         $.userName = data.data.user_name;
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+/**
+ * 统计签到天数, 没什么用~
+ */
+function getCount() {
+    return new Promise((resolve) => {
+        $.get(sendGet('growth_api/v1/get_counts', ``), (err, response, data) => {
+            try {
+                if (err) {
+                    console.log(`getCount API 请求失败\n${JSON.stringify(err)}`)
+                } else {
+                    data = JSON.parse(data);
+                    if (0 === data.err_no) {
+                        message += `\n【签到统计】连签${data.data.cont_count}天、累签${data.data.sum_count}天`
                     }
                 }
             } catch (e) {
