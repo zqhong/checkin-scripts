@@ -117,11 +117,9 @@ function sendPost(path, body = {}) {
         headers: {
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-requested-with": "XMLHttpRequest",
-            "Origin": `${$.SITE_URL}/${path}`,
             "Referer": `${$.SITE_URL}/${path}`,
             "Accept-encoding": "gzip, deflate, br",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.62"
         }
     }
 }
