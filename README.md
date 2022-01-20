@@ -1,13 +1,13 @@
 <p align="center">
     <h1 align="center">scripts</h1>
 </p>
-
 <p align="center">
-    每天定时自动签到
+    一些脚本，每天定时自动签到
     <br />
     <br />
-    <a href="https://github.com/sudojia/sspanel_checkin/issues/new">上报Bug、意见反馈</a>
+    <a href="https://github.com/sudojia/scripts/issues/new">上报Bug、意见反馈</a>
   </p>
+
 
 
 - [💍介绍](#介绍)
@@ -18,19 +18,22 @@
 - [🔛使用](#使用)
 - [🎯TODO](#TODO)
 - [🕛历程](#历程)
-- [✈️机场推荐](#%EF%B8%8F机场推荐)
 
 ## 💍介绍
 
-每天定时自动签到  `SSPANEL`  面板的✈️网站从而获得流量，支持多网站、多用户、以及多个消息平台（Telegram、server 酱、Bark、PushPlus、钉钉等）服务推送。
+每天定时自动签到  `SSPANEL`  面板、[掘金社区](https://juejin.cn/)，[葫芦侠三楼](https://www.huluxia.com/) 。
 
-项目会在每天早上的北京时间七点三十五分运行，Actions 会有延迟的，几分钟甚至半小时。
+SSPANEL 支持多网站
 
-![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210930135300.jpg)
+掘金支持多用户，用 `&` 分割
 
-同一个机场网站，不同的账号
+葫芦侠签到同掘金
 
-![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20220105095354.png)
+多个消息平台（Telegram、server 酱、Bark、PushPlus、钉钉等）服务推送。
+
+![SSPANEL](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210930135300.jpg)
+
+![hlx](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20220120154135.jpg)
 
 ## 😍特点
 
@@ -47,16 +50,30 @@
 - 断签 7 天或者断签某天就会把你号给删的那种 ✈️
 
   ![images](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/fources.jpg)
+  
+- 掘金签到获取矿石，用于抽奖
+
+- 葫芦侠...貌似没什么卵用（应网友需求写的）
 
 ## 🔑*Env*
 
-### 主变量（必须）
+### 主变量
 
 `Settings - Secrets - New repository secret`
 
-|      Name       |                     Value                     |                             说明                             | 属性 |
-| :-------------: | :-------------------------------------------: | :----------------------------------------------------------: | ---- |
-| `SITE_ACCOUNTS` | 要执行签到的`网站,账号:密码`，多个请用 & 分割 | 单账号填写规则 e.g：`https://paolu.com,aaa@gmail.com:123456`<br>多个填写规则：`https://aaa.com,aaa@gmail.com:aaa&https://bbb.com,bbb@gmail.com:bbb&...以此类推`<br>中文说明：`网站,账号:密码`，多个：`网站,账号:密码&网站,账号:密码`<br>网站与账号密码之间用`英文逗号`（`,`）分割，账号与密码之间用`英文冒号`（`:`）分割 | 必须 |
+如果你需要签到 SSPANEL 面板，就填写 SITE_ACCOUNTS 变量
+
+如果你需要签到掘金，就填写 JUEJIN_COOKIE 变量
+
+...
+
+...
+
+|      Name       |                     Value                     |                             说明                             |
+| :-------------: | :-------------------------------------------: | :----------------------------------------------------------: |
+| `SITE_ACCOUNTS` | 要执行签到的`网站,账号:密码`，多个请用 & 分割 | 单账号填写规则 e.g：`https://paolu.com,aaa@gmail.com:123456`<br>多个填写规则：`https://aaa.com,aaa@gmail.com:aaa&https://bbb.com,bbb@gmail.com:bbb&...以此类推`<br>中文说明：`网站,账号:密码`，多个：`网站,账号:密码&网站,账号:密码`<br>网站与账号密码之间用`英文逗号`（`,`）分割，账号与密码之间用`英文冒号`（`:`）分割 |
+| `JUEJIN_COOKIE` |                  掘金 Cookie                  | 打开[掘金社区](https://juejin.cn/) F12，选择 Application，点击 Cookies<br>填写规则：`sessionid=xxxxxxxxx` |
+| `HLX_ACCOUNTS`  |            账号和密码，支持多账户             | 填写规则：188888888888@`MD5加密密码`<br>密码必须是 MD5 加密后的<br/>[MD5在线加密](https://md5jiami.bmcx.com/) 选择 32 位小写<br>多个填写规则：18888888888@MD5密码&16666666666@MD5密码&...<br>账号和密码直接用 `@` 分割，多个用 `&` |
 
 ### 消息推送变量（可选）
 
@@ -76,28 +93,32 @@
 
 ## ⚠️注意事项
 
-暂不支持密码带  `,`  与  `:`  的特殊字符！
+SSPANEL 签到暂不支持密码带  `,`  与  `:`  的字符！
 
 关于消息推送变量：
 
 1. 如果是 Telegram 通知，那么需要填两个变量，分别是 `TG_BOT_TOKEN` 和 `TG_USER_ID`，两者不可缺一
 2. 如果是钉钉通知，那么需要填写两个变量，分别是 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET`，两者不可缺一
 
-**暂不支持带有图形验证码的机场网站！**
+**SSPANEL 签到暂不支持带有图形验证码的机场网站！**
 
-**暂不支持带有图形验证码的机场网站！**
+**SSPANEL 签到暂不支持带有图形验证码的机场网站！**
 
-**暂不支持带有图形验证码的机场网站！**（就一小小的机场站，登录还 enable 图形验证码？脑子是怎么想的，还影响用户体验好吧！）
+**SSPANEL 签到暂不支持带有图形验证码的机场网站！**（就一小小的机场站，登录还 enable 图形验证码？脑子是怎么想的，还影响用户体验好吧！）
 
 其它：
 
 **HTTPError**
 
-此问题是机场的问题，不是该项目的Bug，有时候机场抽风了，导致项目请求接口失败了
+此问题是机场的问题，不是该项目的 Bug，有时候机场抽风了，导致项目请求接口失败了
 
 ```json
 {"name":"HTTPError","timings":{"start":1641276251619,"socket":1641276251620,"lookup":1641276251675,"connect":1641276251823,"secureConnect":1641276251970,"upload":1641276251970,"response":1641276252195,"end":1641276252196,"phases":{"wait":1,"dns":55,"tcp":148,"tls":147,"request":0,"firstByte":225,"download":1,"total":577}}}
 ```
+
+**SSPANEL 签到问题**
+
+同一个网站，多个账号，导致第一个能成功，第二个总是失败 - **待解决**
 
 ## 🔛使用
 
@@ -127,13 +148,16 @@
 - [x] 多账号
 - [x] 多网站
 - [x] 消息推送
+- [ ] 掘金社区一键 soha
 - [ ] ...
 
 ## 🕛历程
 
-- 2021-9-27 15:22 - 更改写法，采用一个变量，单个规则为：`网站,账号:密码`  多个：`网站,账号:密码&网站,账号:密码`
+- 2022-01-20 10:18 - 添加掘金社区签到、抽奖，应网友要求，添加葫芦侠签到（一开始还以为看剧的葫芦...）
 
-- 2021-9-26 11:18 - 添加多个消息推送（Telegram、server 酱、Bark、PushPlus、钉钉等）
+- 2021-09-27 15:22 - 更改写法，采用一个变量，单个规则为：`网站,账号:密码`  多个：`网站,账号:密码&网站,账号:密码`
 
-- 2021-9-26 0:04 - 支持多账号、多网站！
-- 2021-9-25 22:39 - 第一版推出，仅支持单网站、单账号签到
+- 2021-09-26 11:18 - 添加多个消息推送（Telegram、server 酱、Bark、PushPlus、钉钉等）
+
+- 2021-09-26 0:04 - 支持多账号、多网站！
+- 2021-09-25 22:39 - 第一版推出，仅支持单网站、单账号签到
