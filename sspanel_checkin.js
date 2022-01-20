@@ -80,7 +80,7 @@ async function login() {
  */
 function checkin() {
     return new Promise((resolve) => {
-        $.post(sendPost('user/checkin', ''), (err, response, data) => {
+        $.post(sendPost('user/checkin', ''), async (err, response, data) => {
             try {
                 if (err) {
                     console.log(`checkin API 请求失败\n${JSON.stringify(err)}`)
@@ -117,6 +117,8 @@ function sendPost(path, body = {}) {
         headers: {
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "X-requested-with": "XMLHttpRequest",
+            "Origin": `${$.SITE_URL}/${path}`,
             "Referer": `${$.SITE_URL}/${path}`,
             "Accept-encoding": "gzip, deflate, br",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
