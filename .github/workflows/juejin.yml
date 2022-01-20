@@ -3,7 +3,7 @@ name: juejin
 on:
   workflow_dispatch:
   schedule:
-    - cron: "22 23 * * *"
+    - cron: "15 22 * * *"
   watch:
     types: [ started ]
 
