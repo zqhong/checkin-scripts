@@ -1,17 +1,17 @@
 {
   "name": "sudojia",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}",
-  "main": "sspanel_checkin.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sudojia/sspanel_checkin.git"
+    "url": "https://github.com/sudojia/scripts.git"
   },
   "keywords": [
-    "SSPANEL,签到"
+    "签到,脚本"
   ],
   "author": "sudojia",
   "license": "ISC",

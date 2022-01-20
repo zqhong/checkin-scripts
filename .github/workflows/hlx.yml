@@ -1,9 +1,9 @@
-name: sspanel
+name: hlx
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "35 23 * * *"
+    - cron: "0 21 * * *"
   watch:
     types: [ started ]
 
@@ -32,9 +32,9 @@ jobs:
 
       - name: "开始执行"
         run: |
-          node sspanel_checkin.js
+          node hlx.js
         env:
-          SITE_ACCOUNTS: ${{ secrets.SITE_ACCOUNTS }}
+          HLX_ACCOUNTS: ${{ secrets.HLX_ACCOUNTS }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}

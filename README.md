@@ -1,13 +1,14 @@
 <p align="center">
-    <h1 align="center">sspanel_checkin</h1>
+    <h1 align="center">scripts</h1>
 </p>
 
 <p align="center">
-    每天定时自动签到获得流量
+    每天定时自动签到
     <br />
     <br />
     <a href="https://github.com/sudojia/sspanel_checkin/issues/new">上报Bug、意见反馈</a>
   </p>
+
 
 - [💍介绍](#介绍)
 - [😍特点](#特点)
