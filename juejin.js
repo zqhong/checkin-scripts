@@ -24,8 +24,14 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
             $.index = i + 1;
+            // 默认 Cookie 未失效
             $.isLogin = true;
-            await checkCookie();
+            // 默认今日未签到
+            $.isSignIn = false;
+            // 免费抽奖次数
+            $.freeCount = 0;
+            // 检测状态 (今日是否签到、Cookie 是否失效)
+            await checkStatus();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
             if (!$.isLogin) {
                 await notify.sendNotify(`「掘金签到报告」`, `掘金账号${$.index} Cookie已失效，请重新登录获取Cookie`);
@@ -45,10 +51,17 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
 
 async function main() {
     await getUserName();
-    await $.wait(888)
+    await $.wait(1000);
     await queryFreeLuckyDrawCount();
-    await $.wait(888)
-    await checkStatus();
+    await $.wait(1000);
+    if (!$.isSignIn) {
+        await checkIn();
+        await $.wait(1000);
+        await getCount();
+    } else console.log(`您今日已完成签到，请勿重复签到~\n`);
+    if ($.freeCount !== 0) {
+        await luckyDraw();
+    } else console.log(`今日免费抽奖次数已用尽!\n`);
 }
 
 /**
@@ -56,25 +69,21 @@ async function main() {
  */
 function checkStatus() {
     return new Promise((resolve) => {
-        $.get(sendGet('growth_api/v1/get_today_status', ''), async (err, response, data) => {
+        $.get(sendGet('growth_api/v1/get_today_status', ''), (err, response, data) => {
             try {
                 if (err) {
                     console.log(`checkStatus API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        if (data.data) {
-                            // 如果为 true, 则今日已完成签到
-                            console.log('您今日已完成签到，请勿重复签到~')
-                        } else {
-                            // false 表示今日未签到
-                            // 调用签到函数
-                            await checkIn()
-                        }
+                    // 今日是否已签到 true: 已签到 false: 未签到
+                    $.isSignIn = data.data;
+                    if (403 === data.err_no) {
+                        // Cookie 已失效
+                        $.isLogin = false;
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -89,57 +98,20 @@ function checkStatus() {
  */
 function checkIn() {
     return new Promise((resolve) => {
-        $.post(sendPost('growth_api/v1/check_in', ``), async (err, response, data) => {
+        $.post(sendPost('growth_api/v1/check_in', ``), (err, response, data) => {
             try {
                 if (err) {
                     console.log(`checkIn API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        // 签到所获取的矿石数
-                        $.incrPoint = data.data.incr_point;
-                        // 当前账号总矿石数
-                        $.sumPoint = data.data.sum_point;
-                        message += `「掘金签到报告」\n\n📣=============账号${$.index}=============📣\n【账号昵称】${$.userName}\n【签到状态】已签到\n【今日收入】${$.incrPoint}矿石数\n【总矿石数】${$.sumPoint}矿石数`
-                        await getCount();
-                        if (0 === $.freeCount || -1 === $.freeCount) {
-                            console.log('今日免费抽奖次数已用尽!')
-                        } else {
-                            for (let i = 0; i < $.freeCount; i++) {
-                                // 调用抽奖函数
-                                await luckyDraw();
-                                await $.wait(1500);
-                            }
-                        }
-                    }
+                    // 签到所获取的矿石数
+                    $.incrPoint = data.data.incr_point;
+                    // 当前账号总矿石数
+                    $.sumPoint = data.data.sum_point;
+                    message += `📣=============掘金账号${$.index}=============📣\n【账号昵称】${$.userName}\n【签到状态】已签到\n【今日收入】${$.incrPoint}矿石数\n【总矿石数】${$.sumPoint}矿石数`
                 }
-            } catch (e) {
-                $.logErr(e, response);
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
-/**
- * 查询免费抽奖次数
- */
-function queryFreeLuckyDrawCount() {
-    return new Promise((resolve) => {
-        $.get(sendGet('growth_api/v1/lottery_config/get', ``), (err, response, data) => {
-            try {
-                if (err) {
-                    console.log(`queryFreeLuckyDrawCount API 请求失败\n${JSON.stringify(err)}`)
-                } else {
-                    data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        // 获取到免费抽奖次数
-                        $.freeCount = data.data.free_count;
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -171,8 +143,31 @@ function luckyDraw() {
                         message += `\n【抽奖信息】抽中了${data.data.lottery_name}`;
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+/**
+ * 查询免费抽奖次数
+ */
+function queryFreeLuckyDrawCount() {
+    return new Promise((resolve) => {
+        $.get(sendGet('growth_api/v1/lottery_config/get', ``), (err, response, data) => {
+            try {
+                if (err) {
+                    console.log(`queryFreeLuckyDrawCount API 请求失败\n${JSON.stringify(err)}`)
+                } else {
+                    data = JSON.parse(data);
+                    // 获取免费抽奖次数
+                    $.freeCount = data.data.free_count;
+                }
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -191,12 +186,10 @@ function getUserName() {
                     console.log(`getUserName API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        $.userName = data.data.user_name;
-                    }
+                    $.userName = data.data.user_name;
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -215,37 +208,10 @@ function getCount() {
                     console.log(`getCount API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        message += `\n【签到统计】连签${data.data.cont_count}天、累签${data.data.sum_count}天`
-                    }
+                    message += `\n【签到统计】连签${data.data.cont_count}天、累签${data.data.sum_count}天`
                 }
-            } catch (e) {
-                $.logErr(e, response);
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
-/**
- * 检测 Cookie 是否失效、没法子了，只能另写个方法了！
- */
-function checkCookie() {
-    return new Promise((resolve) => {
-        $.get(sendGet('growth_api/v1/get_today_status', ''), (err, response, data) => {
-            try {
-                if (err) {
-                    console.log(`checkCookie API 请求失败\n${JSON.stringify(err)}`)
-                } else {
-                    data = JSON.parse(data);
-                    console.log(data);
-                    if (403 === data.err_no) {
-                        $.isLogin = false;
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
