@@ -206,11 +206,9 @@ function tenDraw() {
                             console.log(`${draw.lottery_name}`)
                         }
                         let needOreNum = (6000 - data.data.total_lucky_value) / 100 * 2000;
-                        console.log(`本次十连抽加${data.data.draw_lucky_value}幸运值
-                        \n当前总幸运值为${data.data.total_lucky_value}
-                        \n离幸运值满格还差${6000 - data.data.total_lucky_value}幸运值，
-                        所需${needOreNum}矿石数，
-                        还需十连抽${(6000 - data.data.total_lucky_value) / 100}次`);
+                        console.log(`本次十连抽加${data.data.draw_lucky_value}幸运值`);
+                        console.log(`当前总幸运值为${data.data.total_lucky_value}`);
+                        console.log(`离幸运值满格还差${6000 - data.data.total_lucky_value}幸运值，所需${needOreNum}矿石数，还需十连抽${(6000 - data.data.total_lucky_value) / 100}次`);
                     }
                 }
             } catch (err) {
