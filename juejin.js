@@ -6,7 +6,7 @@
  */
 const $ = new require('./env').Env('掘金自动签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
-let JUEJIN_COOKIE = process.env.JUEJIN_COOKIE, cookie = '', cookiesArr = [], message = '';
+let JUEJIN_COOKIE = process.env.JUEJIN_COOKIE, cookie = '', cookiesArr = [], message = '', allMessage = '';
 const JUEJIN_API = 'https://api.juejin.cn';
 
 if (JUEJIN_COOKIE.indexOf('&') > -1) {
@@ -140,7 +140,7 @@ function luckyDraw() {
                 } else {
                     data = JSON.parse(data);
                     if (0 === data.err_no) {
-                        message += `\n【抽奖信息】抽中了${data.data.lottery_name}`;
+                        message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n`;
                     }
                 }
             } catch (err) {
