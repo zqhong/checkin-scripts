@@ -90,7 +90,7 @@ async function main() {
     await $.wait(1000);
     await getOreNum();
     await $.wait(1000);
-    if (tenDrawNum) {
+    if (enableTenDraw) {
         console.log(`检测到你已开启十连抽，正在为你执行十连抽...`);
         for (let i = 0; i < tenDrawNum; i++) {
             await tenDraw();
