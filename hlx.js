@@ -138,7 +138,7 @@ function getAllCategory() {
                         if (c.categoryID !== 0 && c.categoryID !== 94) {
                             $.title = c.title
                             await signIn(c.categoryID)
-                            await $.wait(1500);
+                            await $.wait(888);
                         }
                     }
                 }
