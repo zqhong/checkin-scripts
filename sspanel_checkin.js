@@ -64,8 +64,8 @@ async function login() {
                     await $.wait(2000)
                     await checkin();
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -101,8 +101,8 @@ function checkin() {
                         message += data.msg + '\n\n';
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }

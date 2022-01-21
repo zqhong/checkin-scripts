@@ -84,8 +84,8 @@ function login() {
                         message += `📣=============账号${$.index}=============📣\n【社区昵称】${$.nick}\n【社区等级】${$.level}\n`
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -108,8 +108,8 @@ function checkToken() {
                 } else {
                     console.log(JSON.parse(data).status === 1 ? "令牌验证成功\n" : "令牌验证失败\n")
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -142,8 +142,8 @@ function getAllCategory() {
                         }
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -167,8 +167,8 @@ function signIn(cat_id) {
                 } else {
                     await signInResp();
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
@@ -190,8 +190,8 @@ function signInResp() {
                         message += `【${$.title}】签到成功~获得${data.experienceVal}经验，已连续签到${data.continueDays}天\n`
                     }
                 }
-            } catch (e) {
-                $.logErr(e, response);
+            } catch (err) {
+                $.logErr(err, response);
             } finally {
                 resolve();
             }
