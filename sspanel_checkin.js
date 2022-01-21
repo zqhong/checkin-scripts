@@ -44,6 +44,10 @@ if (total.indexOf('&') > -1) {
 
 async function main() {
     await login();
+    await $.wait(1000);
+    if ($.isRet === 1) {
+        await checkin();
+    }
 }
 
 /**
@@ -51,18 +55,16 @@ async function main() {
  *
  * @returns {*}
  */
-async function login() {
-    return new Promise(async (resolve) => {
-        $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), async (err, response, data) => {
+function login() {
+    return new Promise((resolve) => {
+        $.post(sendPost('auth/login', `email=${$.email}&passwd=${$.pwd}&code=`), (err, response, data) => {
             try {
                 if (err) {
                     console.log(`login API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
                     console.log(data.msg, '\n');
-                    // 开始签到
-                    await $.wait(2000)
-                    await checkin();
+                    $.isRet = data.ret;
                 }
             } catch (err) {
                 $.logErr(err, response);
