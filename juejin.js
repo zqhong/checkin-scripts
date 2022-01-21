@@ -2,11 +2,25 @@
  * @author Telegram@sudojia
  * @site https://blog.imzjw.cn
  * @date 2022/01/19 21:26
+ * @last Modified by Telegram@sudojia
+ * @last Modified time 2022/01/21 20:37
  * @description 掘金自动签到
  */
 const $ = new require('./env').Env('掘金自动签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
-let JUEJIN_COOKIE = process.env.JUEJIN_COOKIE, cookie = '', cookiesArr = [], message = '', allMessage = '';
+let JUEJIN_COOKIE = process.env.JUEJIN_COOKIE, cookie = '', cookiesArr = [], message = '';
+
+// ENABLE_TEN_DRAW: 是否开启十连抽, 默认不开启十连抽、TEN_DRAW_NUM: 十连抽次数, 默认一次十连抽
+let enableTenDraw = false, tenDrawNum = 1;
+
+// TODO 目前十连抽默认所有账号都十连抽、未实现控制哪个账号执行十连抽, 我想到的思路比较烂, 如果你有更好的思路, 欢迎 Telegram@sudojia 或者 PR
+if (process.env.ENABLE_TEN_DRAW) {
+    enableTenDraw = process.env.ENABLE_TEN_DRAW
+}
+if (process.env.TEN_DRAW_NUM) {
+    tenDrawNum = process.env.TEN_DRAW_NUM;
+}
+
 const JUEJIN_API = 'https://api.juejin.cn';
 
 if (JUEJIN_COOKIE.indexOf('&') > -1) {
@@ -20,6 +34,9 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
         console.log('请设置环境变量【JUEJIN_COOKIE】')
         return;
     }
+    if (!enableTenDraw) {
+        console.log(`如需执行十连抽请设置环境变量【ENABLE_TEN_DRAW】为 true 和【TEN_DRAW_NUM】十连抽次数\n`);
+    }
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -30,6 +47,8 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
             $.isSignIn = false;
             // 免费抽奖次数
             $.freeCount = 0;
+            // 账号总矿石数
+            $.oreNum = 0;
             // 检测状态 (今日是否签到、Cookie 是否失效)
             await checkStatus();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
@@ -47,7 +66,7 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
     $.done();
-})
+});
 
 async function main() {
     await getUserName();
@@ -66,7 +85,17 @@ async function main() {
         // 目前只利用签到所获取的抽奖次数进行抽奖！
         await luckyDraw();
     } else {
-        console.log(`今日免费抽奖次数已用尽!`);
+        console.log(`今日免费抽奖次数已用尽!\n`);
+    }
+    await $.wait(1000);
+    await getOreNum();
+    await $.wait(1000);
+    if (tenDrawNum) {
+        console.log(`检测到你已开启十连抽，正在为你执行十连抽...`);
+        for (let i = 0; i < tenDrawNum; i++) {
+            await tenDraw();
+            await $.wait(2000);
+        }
     }
 }
 
@@ -157,6 +186,43 @@ function luckyDraw() {
 }
 
 /**
+ * 十连抽
+ */
+function tenDraw() {
+    return new Promise((resolve) => {
+        $.post(sendPost('growth_api/v1/lottery/ten_draw', ``), (err, response, data) => {
+            try {
+                if (err) {
+                    console.log(`tenDraw API 请求失败\n${JSON.stringify(err)}`)
+                } else {
+                    if (2000 > $.oreNum) {
+                        console.log(`当前账号不足 2000 矿石数，十连抽失败~`)
+                    } else {
+                        // 单抽加 10 幸运值、十连抽加 100 幸运值，6000 满格
+                        console.log(`本次十连抽共消耗 2000 矿石数\n十连抽奖励为: `)
+                        data = JSON.parse(data);
+                        $.lotteryBases = data.data.LotteryBases;
+                        for (let draw of $.lotteryBases) {
+                            console.log(`${draw.lottery_name}`)
+                        }
+                        let needOreNum = (6000 - data.data.total_lucky_value) / 100 * 2000;
+                        console.log(`本次十连抽加${data.data.draw_lucky_value}幸运值
+                        \n当前总幸运值为${data.data.total_lucky_value}
+                        \n离幸运值满格还差${6000 - data.data.total_lucky_value}幸运值，
+                        所需${needOreNum}矿石数，
+                        还需十连抽${(6000 - data.data.total_lucky_value) / 100}次`);
+                    }
+                }
+            } catch (err) {
+                $.logErr(err, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+/**
  * 查询免费抽奖次数
  */
 function queryFreeLuckyDrawCount() {
@@ -178,6 +244,30 @@ function queryFreeLuckyDrawCount() {
         })
     })
 }
+
+/**
+ * 获取总账号矿石数
+ */
+function getOreNum() {
+    return new Promise((resolve) => {
+        $.get(sendGet('growth_api/v1/get_cur_point', ``), (err, response, data) => {
+            try {
+                if (err) {
+                    console.log(`getOreNum API 请求失败\n${JSON.stringify(err)}`)
+                } else {
+                    data = JSON.parse(data);
+                    // 当前账号总矿石数
+                    $.oreNum = data.data;
+                }
+            } catch (err) {
+                $.logErr(err, response);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
 
 /**
  * 获取昵称
