@@ -58,10 +58,16 @@ async function main() {
         await checkIn();
         await $.wait(1000);
         await getCount();
-    } else console.log(`您今日已完成签到，请勿重复签到~\n`);
-    if ($.freeCount !== 0) {
+    } else {
+        console.log(`您今日已完成签到，请勿重复签到~\n`);
+    }
+    await $.wait(1000);
+    if ($.freeCount === 1) {
+        // 目前只利用签到所获取的抽奖次数进行抽奖！
         await luckyDraw();
-    } else console.log(`今日免费抽奖次数已用尽!\n`);
+    } else {
+        console.log(`今日免费抽奖次数已用尽!`);
+    }
 }
 
 /**
@@ -139,9 +145,7 @@ function luckyDraw() {
                     console.log(`luckyDraw API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (0 === data.err_no) {
-                        message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n`;
-                    }
+                    message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n`;
                 }
             } catch (err) {
                 $.logErr(err, response);
