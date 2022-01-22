@@ -51,6 +51,7 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
             $.oreNum = 0;
             // 检测状态 (今日是否签到、Cookie 是否失效)
             await checkStatus();
+            await queryFreeLuckyDrawCount();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
             if (!$.isLogin) {
                 await notify.sendNotify(`「掘金签到报告」`, `掘金账号${$.index} Cookie已失效，请重新登录获取Cookie`);
@@ -71,8 +72,6 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
 async function main() {
     await getUserName();
     await $.wait(1000);
-    await queryFreeLuckyDrawCount();
-    await $.wait(1000);
     if (!$.isSignIn) {
         await checkIn();
         await $.wait(1000);
@@ -81,7 +80,8 @@ async function main() {
         console.log(`您今日已完成签到，请勿重复签到~\n`);
     }
     await $.wait(1000);
-    if ($.freeCount === 1) {
+    if ($.freeCount > 0) {
+        console.log(`进来了...`)
         // 目前只利用签到所获取的抽奖次数进行抽奖！
         await luckyDraw();
     } else {
