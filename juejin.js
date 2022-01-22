@@ -81,7 +81,6 @@ async function main() {
     }
     await $.wait(1000);
     if ($.freeCount > 0) {
-        console.log(`进来了...`)
         // 目前只利用签到所获取的抽奖次数进行抽奖！
         await luckyDraw();
     } else {
