@@ -174,6 +174,7 @@ function luckyDraw() {
                     console.log(`luckyDraw API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
+                    console.log(`抽中了${data.data.lottery_name}\n`);
                     message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n\n`;
                 }
             } catch (err) {
