@@ -53,6 +53,7 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
             await checkStatus();
             await queryFreeLuckyDrawCount();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
+            message += `📣==========掘金账号${$.index}==========📣\n`;
             if (!$.isLogin) {
                 await notify.sendNotify(`「掘金签到报告」`, `掘金账号${$.index} Cookie已失效，请重新登录获取Cookie`);
             }
@@ -142,7 +143,7 @@ function checkIn() {
                     $.incrPoint = data.data.incr_point;
                     // 当前账号总矿石数
                     $.sumPoint = data.data.sum_point;
-                    message += `📣=============掘金账号${$.index}=============📣\n【账号昵称】${$.userName}\n【签到状态】已签到\n【今日收入】${$.incrPoint}矿石数\n【总矿石数】${$.sumPoint}矿石数`
+                    message += `【账号昵称】${$.userName}\n【签到状态】已签到\n【今日收入】${$.incrPoint}矿石数\n【总矿石数】${$.sumPoint}矿石数`
                 }
             } catch (err) {
                 $.logErr(err, response);
@@ -173,7 +174,7 @@ function luckyDraw() {
                     console.log(`luckyDraw API 请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n`;
+                    message += `\n【抽奖信息】抽中了${data.data.lottery_name}\n\n`;
                 }
             } catch (err) {
                 $.logErr(err, response);
