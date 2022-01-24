@@ -51,7 +51,6 @@ if (JUEJIN_COOKIE.indexOf('&') > -1) {
             $.oreNum = 0;
             // 检测状态 (今日是否签到、Cookie 是否失效)
             await checkStatus();
-            await queryFreeLuckyDrawCount();
             console.log(`\n*****开始第【${$.index}】个账号****\n`);
             message += `📣==========掘金账号${$.index}==========📣\n`;
             if (!$.isLogin) {
@@ -80,6 +79,7 @@ async function main() {
     } else {
         console.log(`您今日已完成签到，请勿重复签到~\n`);
     }
+    await queryFreeLuckyDrawCount();
     await $.wait(1000);
     if ($.freeCount > 0) {
         // 目前只利用签到所获取的抽奖次数进行抽奖！
