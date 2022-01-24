@@ -21,19 +21,9 @@
 
 ## 💍介绍
 
-每天定时自动签到  `SSPANEL`  面板、[掘金社区](https://juejin.cn/)，[葫芦侠三楼](https://www.huluxia.com/) 。
+基于 GitHub Actions 每天定时自动签到脚本，支持多账号，目前仅支持 `SSPANEL` 、[掘金社区](https://juejin.cn/)，[葫芦侠三楼](https://www.huluxia.com/)
 
-SSPANEL 支持多网站
-
-掘金支持多用户，用 `&` 分割
-
-葫芦侠签到同掘金
-
-多个消息平台（Telegram、server 酱、Bark、PushPlus、钉钉等）服务推送。
-
-![SSPANEL](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210930135300.jpg)
-
-![hlx](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20220120154135.jpg)
+多个消息平台（Telegram、Server 酱、Bark、PushPlus、钉钉等）服务推送。
 
 ## 😍特点
 
@@ -47,33 +37,39 @@ SSPANEL 支持多网站
 
 - 有这个需求的人
 
-- 断签 7 天或者断签某天就会把你号给删的那种 ✈️
+- SSPANEL 断签 7 天或者断签某天就会把你号给删的那种 ✈️
 
   ![images](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/fources.jpg)
   
-- 掘金签到获取矿石，用于抽奖
+- 掘金签到获取矿石，用于抽奖、兑换！
 
-- 葫芦侠...貌似没什么卵用（应网友需求写的）
+- 葫芦侠...貌似没什么卵用（应网友需求而写）
 
 ## 🔑*Env*
 
-### 主变量
-
 `Settings - Secrets - New repository secret`
 
-如果你需要签到 SSPANEL 面板，就填写 SITE_ACCOUNTS 变量
+如果你需要签到 SSPANEL 面板，就填写 `SITE_ACCOUNTS` 变量
 
-如果你需要签到掘金，就填写 JUEJIN_COOKIE 变量
+如果你需要签到掘金，就填写 `JUEJIN_COOKIE` 变量
 
-...
+### SSPANEL
 
-...
+|      Name       |                      Value                      |                             说明                             |
+| :-------------: | :---------------------------------------------: | :----------------------------------------------------------: |
+| `SITE_ACCOUNTS` | 要执行签到的`网站,账号:密码`，多个请用 `&` 分割 | 单账号填写规则 e.g：`https://paolu.com,aaa@gmail.com:123456`<br/>多个填写规则：`https://aaa.com,aaa@gmail.com:aaa&https://bbb.com,bbb@gmail.com:bbb&...以此类推`<br/>中文说明：`网站,账号:密码`，多个：`网站,账号:密码&网站,账号:密码`<br/>网站与账号密码之间用`英文逗号`（`,`）分割，账号与密码之间用`英文冒号`（`:`）分割 |
 
-|      Name       |                     Value                     |                             说明                             |
-| :-------------: | :-------------------------------------------: | :----------------------------------------------------------: |
-| `SITE_ACCOUNTS` | 要执行签到的`网站,账号:密码`，多个请用 & 分割 | 单账号填写规则 e.g：`https://paolu.com,aaa@gmail.com:123456`<br>多个填写规则：`https://aaa.com,aaa@gmail.com:aaa&https://bbb.com,bbb@gmail.com:bbb&...以此类推`<br>中文说明：`网站,账号:密码`，多个：`网站,账号:密码&网站,账号:密码`<br>网站与账号密码之间用`英文逗号`（`,`）分割，账号与密码之间用`英文冒号`（`:`）分割 |
-| `JUEJIN_COOKIE` |                  掘金 Cookie                  | 打开[掘金社区](https://juejin.cn/) F12，选择 Application，点击 Cookies<br>填写规则：`sessionid=xxxxxxxxx` |
-| `HLX_ACCOUNTS`  |            账号和密码，支持多账户             | 填写规则：188888888888@`MD5加密密码`<br>密码必须是 MD5 加密后的<br/>[MD5在线加密](https://md5jiami.bmcx.com/) 选择 32 位小写<br>多个填写规则：18888888888@MD5密码&16666666666@MD5密码&...<br>账号和密码直接用 `@` 分割，多个用 `&` |
+### 掘金
+
+|      Name       |    Value    |                             说明                             |
+| :-------------: | :---------: | :----------------------------------------------------------: |
+| `JUEJIN_COOKIE` | 掘金 Cookie | 打开[掘金社区](https://juejin.cn/) F12，选择 Application，点击 Cookies<br/>填写规则：`sessionid=xxxxxxxxx` |
+
+### 葫芦侠
+
+|      Name      |         Value          |                             说明                             |
+| :------------: | :--------------------: | :----------------------------------------------------------: |
+| `HLX_ACCOUNTS` | 账号和密码，支持多账户 | 填写规则：188888888888@`MD5加密密码`<br/>密码必须是 MD5 加密后的密码<br/>[MD5在线加密](https://md5jiami.bmcx.com/) 选择 32 位小写<br/>多个填写规则：18888888888@MD5密码&16666666666@MD5密码&...<br/>账号和密码直接用 `@` 分割，多个用 `&` |
 
 ### 消息推送变量（可选）
 
@@ -95,30 +91,9 @@ SSPANEL 支持多网站
 
 SSPANEL 签到暂不支持密码带  `,`  与  `:`  的字符！
 
-关于消息推送变量：
-
-1. 如果是 Telegram 通知，那么需要填两个变量，分别是 `TG_BOT_TOKEN` 和 `TG_USER_ID`，两者不可缺一
-2. 如果是钉钉通知，那么需要填写两个变量，分别是 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET`，两者不可缺一
+SSPANEL 签到同一个网站，多个账号，导致第一个能成功，第二个总是失败 - **待解决**
 
 **SSPANEL 签到暂不支持带有图形验证码的机场网站！**
-
-**SSPANEL 签到暂不支持带有图形验证码的机场网站！**
-
-**SSPANEL 签到暂不支持带有图形验证码的机场网站！**（就一小小的机场站，登录还 enable 图形验证码？脑子是怎么想的，还影响用户体验好吧！）
-
-其它：
-
-**HTTPError**
-
-此问题是机场的问题，不是该项目的 Bug，有时候机场抽风了，导致项目请求接口失败了
-
-```json
-{"name":"HTTPError","timings":{"start":1641276251619,"socket":1641276251620,"lookup":1641276251675,"connect":1641276251823,"secureConnect":1641276251970,"upload":1641276251970,"response":1641276252195,"end":1641276252196,"phases":{"wait":1,"dns":55,"tcp":148,"tls":147,"request":0,"firstByte":225,"download":1,"total":577}}}
-```
-
-**SSPANEL 签到问题**
-
-同一个网站，多个账号，导致第一个能成功，第二个总是失败 - **待解决**
 
 ## 🔛使用
 
@@ -138,7 +113,7 @@ SSPANEL 签到暂不支持密码带  `,`  与  `:`  的字符！
 
    ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171547.jpg)
 
-   执行成功，如图，如果报错，不妨可以提个 [issues](https://github.com/sudojia/sspanel_checkin/issues/new)
+   执行成功，如图，如果报错，不妨提个 [issues](https://github.com/sudojia/sspanel_checkin/issues/new)
 
    ![image](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20210927171605.jpg)
 
