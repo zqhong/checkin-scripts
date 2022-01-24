@@ -164,7 +164,7 @@ function checkIn() {
  * lottery_id: 6997270183769276416、name: Yoyo抱枕、type: 4
  * lottery_id: 7001028932350771203、name: 掘金马克杯、type: 4
  * lottery_id: 7020306802570952718、name: 掘金棒球帽、type: 4
- * lottery_id: 6981705951946489886、name: Switch、type: 3
+ * lottery_id: 698170595 1946489886、name: Switch、type: 3
  */
 function luckyDraw() {
     return new Promise((resolve) => {
