@@ -30,9 +30,9 @@ if (total.indexOf('&') > -1) {
     for (let i = 0; i < totalList.length; i++) {
         $.index = i + 1;
         // 账号
-        $.phone = totalList[i].split('@')[0];
+        $.phone = totalList[i].split('#')[0];
         // MD5 加密密码
-        $.paswd = totalList[i].split('@')[1];
+        $.paswd = totalList[i].split('#')[1];
         console.log(`\n*****开始第【${$.index}】个账号****\n`);
         await main();
         await $.wait(2000)
