@@ -25,6 +25,10 @@
 
 多个消息平台（Telegram、Server 酱、Bark、PushPlus、钉钉等）服务推送。
 
+PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有时间的话（并不能全部完成，比如移动端登录访问，发布文章等）
+
+![images](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20220927111138.jpg)
+
 ## 😍特点
 
 - ~~💰~~ 免费（项目运行在 GitHub Actions 上.）
