@@ -84,7 +84,12 @@
 
 1. SSPANEL 签到暂不支持密码带  `,`  与  `:`  的字符！
 2. SSPANEL 签到同一个网站，多个账号时，导致第一个能成功，第二个总是失败 - **待解决**
-3. **SSPANEL 签到暂不支持带有图形验证码的机场网站！**
+
+**<font color='red'>SSPANEL 签到暂不支持带有图形验证码的机场网站！</font>**
+
+**<font color='red'>SSPANEL 签到暂不支持带有图形验证码的机场网站！</font>**
+
+**<font color='red'>SSPANEL 签到暂不支持带有图形验证码的机场网站！</font>**
 
 ## 🔛使用
 
