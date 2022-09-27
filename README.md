@@ -27,7 +27,7 @@
 
 PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有时间的话（并不能全部完成，比如移动端登录访问，发布文章等）
 
-![images](https://cdn.jsdelivr.net/gh/sudojia/sspanel_checkin/img/20220927111138.jpg)
+![images](https://raw.githubusercontent.com/sudojia/scripts/master/img/20220927111138.jpg)
 
 ## 😍特点
 
