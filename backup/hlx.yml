@@ -2,8 +2,8 @@ name: hlx
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 21 * * *"
+  #schedule:
+    #- cron: "0 21 * * *"
   # watch:
     # types: [ started ]
 
