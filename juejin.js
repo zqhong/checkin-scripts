@@ -10,7 +10,8 @@ const $ = new require('./env').Env('掘金自动签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 let JUEJIN_COOKIE = process.env.JUEJIN_COOKIE, cookie = '', cookiesArr = [], message = '';
 
-// ENABLE_TEN_DRAW: 是否开启十连抽, 默认不开启十连抽、TEN_DRAW_NUM: 十连抽次数, 默认一次十连抽
+// ENABLE_TEN_DRAW: 是否开启十连抽, 默认不开启十连抽, true: 开启十连抽
+// TEN_DRAW_NUM: 十连抽次数, 默认一次十连抽
 let enableTenDraw = false, tenDrawNum = 1;
 
 // TODO 目前十连抽默认所有账号都十连抽、未实现控制哪个账号执行十连抽, 我想到的思路比较烂, 如果你有更好的思路, 欢迎 Telegram@sudojia 或者 PR
