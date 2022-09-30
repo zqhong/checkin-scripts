@@ -1,4 +1,4 @@
-name: juejin
+name: traffic
 
 on:
   workflow_dispatch:
