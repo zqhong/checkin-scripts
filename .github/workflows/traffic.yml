@@ -32,7 +32,7 @@ jobs:
 
       - name: "开始执行"
         run: |
-          node juejin.js
+          node traffic_query.js
         env:
           CAR_NO: ${{ secrets.CAR_NO }}
           HOST: ${{ secrets.HOST }}
