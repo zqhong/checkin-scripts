@@ -21,7 +21,7 @@ if (car_no.indexOf('&') > -1) {
         $.eti = "";
         console.log(`\n*****开始第【${$.index}】账号****\n`);
         await main();
-        await $.wait(1500)
+        await $.wait(1000)
     }
     if (message) {
         await notify.sendNotify(`${$.name}`, `${message}`);
@@ -34,7 +34,7 @@ if (car_no.indexOf('&') > -1) {
 
 async function main() {
     await login();
-    await $.wait(2000)
+    await $.wait(1000)
     await doQuery();
 }
 
@@ -65,14 +65,14 @@ function doQuery() {
                     console.log(`query 接口请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    console.log(data);
                     // 总共使用量
                     let usedFlow = data.data.details.usedFlow;
                     // 剩余流量
                     let leftFlow = data.data.details.leftFlow;
                     // 总流量
                     let totalFlow = data.data.details.totalFlow;
-                    message += `\n查询时间：${data.time}\n总流量：${totalFlow}MB\n剩余流量：${leftFlow}MB\n总使用：${usedFlow}MB`;
+                    console.log(usedFlow + "\n" + leftFlow + "\n" + totalFlow)
+                    message += `\n总流量：${totalFlow}MB\n剩余流量：${leftFlow}MB\n总使用：${usedFlow}MB\n`;
                 }
             } catch (err) {
                 $.logErr(err, response);
@@ -106,7 +106,6 @@ function sendPost(path, body = {}) {
             "User-Agent": "Mozilla/5.0 (Linux; Android 9; ONEPLUS A5000 Build/PKQ1.180716.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 XWEB/3263 MMWEBSDK/20220402 Mobile Safari/537.36 MMWEBID/6026 MicroMessenger/8.0.22.2140(0x28001637) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64 MiniProgramEnv/android",
             "Content-type": "application/json; charset=utf-8",
             "Accept-Encoding": "gzip,compress,br,deflate",
-            "eti": `${$.eti}`
         }
     }
 }
