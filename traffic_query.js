@@ -20,6 +20,7 @@ if (car_no.indexOf('&') > -1) {
         $.index = i + 1;
         $.eti = "";
         console.log(`\n*****开始第【${$.index}】账号****\n`);
+        message += `📣========第【${$.index}】个账号查询========📣\n`;
         await main();
         await $.wait(1000)
     }
@@ -73,7 +74,7 @@ function doQuery() {
                     // 总流量
                     let totalFlow = data.data.details.totalFlow;
                     console.log(data.msg);
-                    message += `\n总流量：${totalFlow}MB\n剩余流量：${leftFlow}MB\n总使用：${usedFlow}MB\n`;
+                    message += `总流量：${totalFlow}MB\n剩余流量：${leftFlow}MB\n总使用：${usedFlow}MB\n`;
                 }
             } catch (err) {
                 $.logErr(err, response);
