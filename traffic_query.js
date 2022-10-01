@@ -46,6 +46,7 @@ function login() {
                     console.log(`login 接口请求失败\n${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
+                    console.log(200 === data.code ? "登录成功" : "状态异常");
                     $.eti = data.data.eti
                 }
             } catch (err) {
@@ -71,7 +72,7 @@ function doQuery() {
                     let leftFlow = data.data.details.leftFlow;
                     // 总流量
                     let totalFlow = data.data.details.totalFlow;
-                    console.log(usedFlow + "\n" + leftFlow + "\n" + totalFlow)
+                    console.log(data.msg);
                     message += `\n总流量：${totalFlow}MB\n剩余流量：${leftFlow}MB\n总使用：${usedFlow}MB\n`;
                 }
             } catch (err) {
