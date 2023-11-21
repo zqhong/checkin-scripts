@@ -74,7 +74,7 @@ function getUser() {
                     let profileUrl = data.response.players[0].profileurl;
                     // 获取当前正在游玩的游戏
                     let gameExtrainfo = data.response.players[0].gameextrainfo;
-                    message += '用户名【' + personaName + '】\n状态【' + personaState + '】\n主页:' + profileUrl + '\n当前正在游玩【' + gameExtrainfo + '】'
+                    message += '用户名【' + personaName + '】\n状态【' + personaState + '】\n主页：' + profileUrl + '\n当前正在游玩【' + gameExtrainfo + '】\n'
                     // console.log('用户名【', personaName, '】\n状态【', personaState, '】\n主页:', profileUrl, '\n当前正在游玩【', gameExtrainfo, '】');
                 }
             } catch (error) {
