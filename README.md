@@ -56,6 +56,8 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 
 如果你需要签到掘金，就填写 `JUEJIN_COOKIE` 变量
 
+...
+
 ### SSPANEL
 
 |      Name       |                      Value                      |                             说明                             |
@@ -67,6 +69,15 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 |      Name       |    Value    |                             说明                             |
 | :-------------: | :---------: | :----------------------------------------------------------: |
 | `JUEJIN_COOKIE` | 掘金 Cookie | 打开[掘金社区](https://juejin.cn/) F12，选择 Application，点击 Cookies<br/>填写规则：`sessionid=xxxxxxxxx` |
+
+### Steam 游玩时长获取
+
+**每周六的早上八点执行**
+
+|     Name      |                            Value                             |                       说明                       |
+| :-----------: | :----------------------------------------------------------: | :----------------------------------------------: |
+| `STEAM_TOKEN` | 前往 https://steamcommunity.com/dev/apikey 注册你的 Steam Web API 密钥<br>eg: AB2C3xxxxxxxxxxxxxxxxx64xxxx | 填入你的密钥<br>eg: AB2C3xxxxxxxxxxxxxxxxx64xxxx |
+| `STEAM_64_ID` | 前往 https://steamid.top/ 获取你的 64 位 Steam ID<br>也可登录 [Steam](https://steamcommunity.com/login/home/) 并前往你的 Steam 个人主页 URL 地址栏直接获取<br>https://steamcommunity.com/profiles/76561xxxxxxxxx/<br>URL 最后那一串数字即是 64 位 Steam ID |                eg:76561xxxxxxxxx                 |
 
 ### 消息推送变量（可选）
 
@@ -127,6 +138,8 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 - [ ] ...
 
 ## 🕛历程
+
+- 2023-11-21 - 添加 Steam 游玩时长获取
 
 - 2022-09-27 - 移除葫芦侠（葫芦侠加了签名参数）
 
