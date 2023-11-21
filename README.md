@@ -72,7 +72,7 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 
 ### Steam 游玩时长获取
 
-每周六的早上八点执行, 可自行更改 [stam_playtime.yml](https://github.com/sudojia/scripts/blob/83eeb06c36f7a2021d358262709a5a82ced01b2f/.github/workflows/stam_playtime.yml#L7)
+每周六的早上八点执行, 可自行 [Fork](https://github.com/login?return_to=%2Fsudojia%2Fscripts) 后更改 [stam_playtime.yml](https://github.com/sudojia/scripts/blob/83eeb06c36f7a2021d358262709a5a82ced01b2f/.github/workflows/stam_playtime.yml#L7)
 
 |     Name      |                            Value                             |                       说明                       |
 | :-----------: | :----------------------------------------------------------: | :----------------------------------------------: |
