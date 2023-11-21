@@ -42,7 +42,7 @@ async function main() {
  */
 function getUser() {
     return new Promise((resolve) => {
-        $.get(sendGet('ISteamUser/GetPlayerSummaries/v0002/?key=' + STEAM_TOKEN + '&steamids=' + STEAM_64_ID + ''), (error, response, data) => {
+        $.get(sendGet('ISteamUser/GetPlayerSummaries/v0002/?key=' + STEAM_TOKEN + '&steamids=' + STEAM_64_ID), (error, response, data) => {
             try {
                 if (error) {
                     console.log(`API 请求失败\n请正确输入STEAM_TOKEN和STEAM_64_ID\n以为输出错误信息\n${JSON.stringify(error)}`)
@@ -74,7 +74,7 @@ function getUser() {
                     let profileUrl = data.response.players[0].profileurl;
                     // 获取当前正在游玩的游戏
                     let gameExtrainfo = data.response.players[0].gameextrainfo;
-                    message += '用户名【', personaName, '】\n状态【', personaState, '】\n主页:', profileUrl, '\n当前正在游玩【', gameExtrainfo, '】'
+                    message += '用户名【' + personaName + '】\n状态【' + personaState + '】\n主页:' + profileUrl + '\n当前正在游玩【' + gameExtrainfo + '】'
                     // console.log('用户名【', personaName, '】\n状态【', personaState, '】\n主页:', profileUrl, '\n当前正在游玩【', gameExtrainfo, '】');
                 }
             } catch (error) {
@@ -92,7 +92,7 @@ function getUser() {
  */
 function selectSteamTime() {
     return new Promise((resolve) => {
-        $.get(sendGet('IPlayerService/GetRecentlyPlayedGames/v1?key=' + STEAM_TOKEN + '&steamid=' + STEAM_64_ID + ''), (error, response, data) => {
+        $.get(sendGet('IPlayerService/GetRecentlyPlayedGames/v1?key=' + STEAM_TOKEN + '&steamid=' + STEAM_64_ID), (error, response, data) => {
             try {
                 if (error) {
                     console.log(`API 请求失败\n请正确输入STEAM_TOKEN和STEAM_64_ID\n以为输出错误信息\n${JSON.stringify(error)}`)
@@ -108,7 +108,7 @@ function selectSteamTime() {
                         // 获取游戏名
                         let game_name = g.name;
                         // console.log('游戏名【', game_name, '】\n总时长:', playtime_hour, ' h', '\n======');
-                        message += '\n游戏名【', game_name, '】\n总时长:', playtime_hour, ' h', '\n======';
+                        message += '\n游戏名【' + game_name + '】\n总时长:' + playtime_hour + ' h' + '\n======';
                     }
                 }
             } catch (error) {
