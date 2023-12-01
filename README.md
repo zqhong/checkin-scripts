@@ -143,6 +143,10 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 <p align='center'>
   <img src="https://api.star-history.com/svg?repos=sudojia/scripts&type=Date">
 </p>
+## ⚖️许可证
+
+本脚本库使用 [GPLv3](https://github.com/sudojia/scripts/blob/master/LICENSE) 许可证，脚本库中任何脚本不经允许**不可商用**。宣传或转载时请带上[本脚本库链接](https://github.com/sudojia/scripts)。
+
 ## 🕛历程
 
 - 2023-11-21 - 添加 Steam 游玩时长获取
