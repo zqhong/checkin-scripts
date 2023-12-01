@@ -137,6 +137,12 @@ PS：最近发现掘金社区多了个成长等级，感觉可以写一写，有
 - [ ] 掘金社区一键梭哈
 - [ ] ...
 
+## ⭐点个 Star 支持作者
+<!-- ![](https://api.star-history.com/svg?repos=sudojia/scripts&type=Date) -->
+
+<p align='center'>
+  <img src="https://api.star-history.com/svg?repos=sudojia/scripts&type=Date">
+</p>
 ## 🕛历程
 
 - 2023-11-21 - 添加 Steam 游玩时长获取
