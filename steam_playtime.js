@@ -2,14 +2,14 @@
  * @author Telegram@sudojia
  * @site https://blog.imzjw.cn
  * @date 2023/11/21 09:13
- * @description Steam游玩时长查询
+ * @last Modified by sudojia
+ * @last Modified time 2023/12/5 21:42
+ * @description Steam 游玩时长查询
  */
 const $ = new require('./env').Env('Steam游玩时长查询');
 const notify = $.isNode() ? require('./sendNotify') : '';
 let STEAM_TOKEN = process.env.STEAM_TOKEN, STEAM_64_ID = process.env.STEAM_64_ID, message = '';
-
 const STEAM_API = 'http://api.steampowered.com';
-
 !(async () => {
     if (!STEAM_TOKEN) {
         console.log('请先设置环境变量【STEAM_TOKEN】')
@@ -20,7 +20,7 @@ const STEAM_API = 'http://api.steampowered.com';
         return;
     }
     await main();
-    await $.wait(2000);
+    await $.wait(1000);
     if (message) {
         await notify.sendNotify(`${$.name}`, `${message}`);
     }
@@ -51,8 +51,11 @@ function getUser() {
                     // 获取用户名
                     let personaName = data.response.players[0].personaname;
                     // 获取当前状态
-                    let getPersonaState = data.response.players[0].profilestate;
-                    let personaState
+                    let getPersonaState = data.response.players[0].personastate;
+                    // 默认为离线
+                    // 0: 离线 如果玩家的个人资料是私人的，则该值将始终为 "0"
+                    // 除非用户已将其状态设置为寻求交易或寻求玩游戏，因为即使个人资料是私人的，错误也会导致这些状态出现。
+                    let personaState = '离线';
                     if (getPersonaState === 1) {
                         personaState = '在线';
                     } else if (getPersonaState === 2) {
@@ -65,17 +68,12 @@ function getUser() {
                         personaState = '想要交易';
                     } else if (getPersonaState === 6) {
                         personaState = '想要玩';
-                    } else {
-                        // 0: 离线 如果玩家的个人资料是私人的，则该值将始终为 "0"
-                        // 除非用户已将其状态设置为寻求交易或寻求玩游戏，因为即使个人资料是私人的，错误也会导致这些状态出现。
-                        personaState = '离线';
                     }
-                    // 获取 Steam 个人主页
+                    // 获取 Steam 个人主页 URL
                     let profileUrl = data.response.players[0].profileurl;
                     // 获取当前正在游玩的游戏
-                    let gameExtrainfo = data.response.players[0].gameextrainfo;
-                    message += '用户名【' + personaName + '】\n状态【' + personaState + '】\n主页：' + profileUrl + '\n当前正在游玩【' + gameExtrainfo + '】\n'
-                    // console.log('用户名【', personaName, '】\n状态【', personaState, '】\n主页:', profileUrl, '\n当前正在游玩【', gameExtrainfo, '】');
+                    let gameExtrainfo = data.response.players[0].gameextrainfo == null ? '当前没有在游玩' : '当前正在游玩【' + data.response.players[0].gameextrainfo + '】';
+                    message += '用户名【' + personaName + '】\n状态【' + personaState + '】\n主页：' + profileUrl + '\n' + gameExtrainfo + '\n'
                 }
             } catch (error) {
                 $.logErr(error, response);
@@ -107,7 +105,6 @@ function selectSteamTime() {
                         let playtime_hour = playtime_minute.toFixed(1)
                         // 获取游戏名
                         let game_name = g.name;
-                        // console.log('游戏名【', game_name, '】\n总时长:', playtime_hour, ' h', '\n======');
                         message += '\n游戏名【' + game_name + '】\n总时长:' + playtime_hour + ' h' + '\n======';
                     }
                 }
@@ -120,6 +117,11 @@ function selectSteamTime() {
     })
 }
 
+/**
+ * 封装 HTTP GET 请求
+ * @param path
+ * @returns {{headers: {}, url: string}}
+ */
 function sendGet(path) {
     return {
         url: `${STEAM_API}/${path}`, headers: {}

@@ -4,3 +4,4 @@ dist/
 .cargo-ok
 .idea/
 backup
+test
